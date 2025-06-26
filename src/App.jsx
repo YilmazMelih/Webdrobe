@@ -1,8 +1,13 @@
-import { useState, useEffect } from "react";
 import "./index.css";
-import NonAuthView from "./components/NonAuthView.jsx";
+
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 import { auth } from "./firebase.js";
-import { onAuthStateChanged, signOut } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+
+import NonAuthView from "./components/NonAuthView.jsx";
+import Dashboard from "./components/Dashboard.jsx";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -16,22 +21,26 @@ function App() {
         return () => unsubscribe(); // cleanup listener on unmount
     }, []);
 
+    if (loading) return <h1>Loading...</h1>;
+
     return (
-        <div className="app-container">
-            {loading ? (
-                "Loading..."
-            ) : user ? (
-                <button
-                    onClick={() => {
-                        signOut(auth);
-                    }}
-                >
-                    Sign Out
-                </button>
-            ) : (
-                <NonAuthView />
-            )}
-        </div>
+        <BrowserRouter>
+            <div className="app-container">
+                <Routes>
+                    <Route
+                        path="/login"
+                        element={!user ? <NonAuthView /> : <Navigate to="/dashboard" />}
+                    />
+
+                    <Route
+                        path="/dashboard"
+                        element={user ? <Dashboard /> : <Navigate to="/login" />}
+                    />
+
+                    <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
+                </Routes>
+            </div>
+        </BrowserRouter>
     );
 }
 
