@@ -5,6 +5,7 @@ export default function SignUpForm(props) {
     return (
         <div className="auth-form-div">
             <h3 className="auth-form-header">Sign Up</h3>
+
             <input id="username" placeholder="MyUsername" aria-label="username"></input>
             <input
                 id="email"
@@ -18,18 +19,21 @@ export default function SignUpForm(props) {
                 placeholder="password123"
                 aria-label="password"
             ></input>
-            <button onClick={signUpUser}>Sign Up</button>
+            <button onClick={() => signUpUser(props.setSignedIn)}>Sign Up</button>
 
-            <button onClick={signInGoogle}>
+            <button onClick={() => signInGoogle(props.setSignedIn)}>
                 <img src={googleLogo} />
                 Continue with Google
             </button>
+            <dialog id="errorDialog">
+                <p id="errorText">Invalid sign up</p>
+            </dialog>
             <span>
                 Have an account?{" "}
                 <strong
                     className="auth-toggle"
                     onClick={() => {
-                        props.func((prev) => {
+                        props.setLoggingInToggle((prev) => {
                             return !prev;
                         });
                     }}

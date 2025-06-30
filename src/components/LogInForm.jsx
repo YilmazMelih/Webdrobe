@@ -6,6 +6,7 @@ export default function LogInForm(props) {
     return (
         <div className="auth-form-div">
             <h3 className="auth-form-header">Log In</h3>
+
             <input
                 id="email"
                 type="email"
@@ -18,18 +19,21 @@ export default function LogInForm(props) {
                 placeholder="password123"
                 aria-label="password"
             ></input>
-            <button onClick={logInUser}>Log In</button>
-            <button onClick={signInGoogle}>
+            <button onClick={() => logInUser(props.setSignedIn)}>Log In</button>
+            <button onClick={() => signInGoogle(props.setSignedIn)}>
                 {" "}
                 <img src={googleLogo} />
                 Continue with Google
             </button>
+            <dialog id="errorDialog">
+                <p id="errorText">Invalid email or password</p>
+            </dialog>
             <span>
                 Don't have an acconut?{" "}
                 <strong
                     className="auth-toggle"
                     onClick={() => {
-                        props.func((prev) => {
+                        props.setLoggingInToggle((prev) => {
                             return !prev;
                         });
                     }}

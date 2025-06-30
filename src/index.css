@@ -49,7 +49,7 @@ body {
 .auth-form-header {
     font-size: 2rem;
     font-weight: 550;
-    margin-bottom: 35px;
+    margin-bottom: 25px;
     color: #4e4e4e;
 }
 
@@ -101,4 +101,13 @@ body {
 
 span:has(.auth-toggle) {
     color: #4e4e4e;
+}
+
+dialog {
+    border: none;
+    color: red;
+    position: relative;
+    max-width: 350px;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0);
 }

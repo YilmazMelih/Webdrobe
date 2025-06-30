@@ -4,7 +4,6 @@ import {
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
     signInWithPopup,
-    getAdditionalUserInfo,
     signInWithEmailAndPassword,
     updateProfile,
 } from "firebase/auth";
@@ -23,54 +22,61 @@ const provider = new GoogleAuthProvider();
 
 export const auth = getAuth(app);
 
-export function signInGoogle() {
+export function signInGoogle(setSignedIn) {
     signInWithPopup(auth, provider)
-        .then((result) => {
-            const credential = GoogleAuthProvider.credentialFromResult(result);
-            const token = credential.accessToken;
-            const user = result.user;
+        .then(() => {
+            setSignedIn(true);
         })
         .catch((error) => {
-            const errorCode = error.code;
             const errorMessage = error.message;
-            const email = error.customData.email;
-            const credential = GoogleAuthProvider.credentialFromError(error);
-            console.log(errorMessage);
+            console.error("Sign in error: ", errorMessage);
         });
 }
 
-export function signUpUser() {
+export async function signUpUser(setSignedIn) {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
     const username = document.getElementById("username").value;
 
-    createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            updateProfile(auth.currentUser, {
-                displayName: username,
-            }).catch((error) => {
-                console.error(error.message);
-            });
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorMessage);
-        });
+    try {
+        if (!/^[a-zA-Z0-9]{3,16}$/.test(username)) {
+            throw new Error("bad-username");
+        }
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        await updateProfile(user, { displayName: username });
+        setSignedIn(true);
+    } catch (error) {
+        const errorCode = error.code;
+        const dialogEl = document.getElementById("errorDialog");
+        const dialogMsg = document.getElementById("errorText");
+        console.error("Sign up error: ", error.message);
+        if (errorCode == "auth/invalid-email" || errorCode == "auth/missing-email") {
+            dialogMsg.innerText = "Invalid email";
+        } else if (
+            errorCode == "auth/weak-password" ||
+            errorCode == "auth/password-does-not-meet-requirements"
+        ) {
+            dialogMsg.innerText = "Password must be 6-16 characters";
+        } else if (error.message == "bad-username") {
+            dialogMsg.innerText = "Username must be 3-16 characters with no special characters";
+        }
+        dialogEl.show();
+    }
 }
 
-export function logInUser() {
+export function logInUser(setSignedIn) {
     const email = document.getElementById("email").value;
     const password = document.getElementById("password").value;
 
     signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
+        .then(() => {
+            setSignedIn(true);
         })
         .catch((error) => {
-            const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorMessage);
+            console.error("Logging in error: ", errorMessage);
+            document.getElementById("errorDialog").show();
         });
 }

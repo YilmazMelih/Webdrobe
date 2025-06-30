@@ -3,7 +3,7 @@ import SignUpForm from "./SignUpForm.jsx";
 import { useState } from "react";
 
 export default function NonAuthView(props) {
-    const [loggingIn, setLoggingIn] = useState(true);
+    const [loggingInToggle, setLoggingInToggle] = useState(true);
 
     return (
         <>
@@ -12,7 +12,17 @@ export default function NonAuthView(props) {
                 <h2>Outfit planning made easy!</h2>
             </header>
             <main>
-                {loggingIn ? <LogInForm func={setLoggingIn} /> : <SignUpForm func={setLoggingIn} />}
+                {loggingInToggle ? (
+                    <LogInForm
+                        setSignedIn={props.setSignedIn}
+                        setLoggingInToggle={setLoggingInToggle}
+                    />
+                ) : (
+                    <SignUpForm
+                        setSignedIn={props.setSignedIn}
+                        setLoggingInToggle={setLoggingInToggle}
+                    />
+                )}
             </main>
         </>
     );

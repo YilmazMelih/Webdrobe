@@ -1,6 +1,6 @@
 import "./index.css";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { auth } from "./firebase.js";
@@ -8,18 +8,28 @@ import { onAuthStateChanged } from "firebase/auth";
 
 import NonAuthView from "./components/NonAuthView.jsx";
 import Dashboard from "./components/Dashboard.jsx";
+import firebase from "firebase/compat/app";
 
 function App() {
     const [user, setUser] = useState(null);
+    const [signedIn, setSignedIn] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            setUser(user);
+            if (user) {
+                if (!user.displayName) {
+                    user.reload().then(() => setUser(auth.currentUser));
+                } else {
+                    setUser(user);
+                }
+            } else {
+                setUser(null);
+            }
             setLoading(false);
         });
         return () => unsubscribe(); // cleanup listener on unmount
-    }, []);
+    }, [auth.currentUser]);
 
     if (loading) return <h1>Loading...</h1>;
 
@@ -29,12 +39,24 @@ function App() {
                 <Routes>
                     <Route
                         path="/login"
-                        element={!user ? <NonAuthView /> : <Navigate to="/dashboard" />}
+                        element={
+                            !user || !signedIn ? (
+                                <NonAuthView setSignedIn={setSignedIn} />
+                            ) : (
+                                <Navigate to="/dashboard" />
+                            )
+                        }
                     />
 
                     <Route
                         path="/dashboard"
-                        element={user ? <Dashboard /> : <Navigate to="/login" />}
+                        element={
+                            user ? (
+                                <Dashboard setSignedIn={setSignedIn} />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
                     />
 
                     <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
