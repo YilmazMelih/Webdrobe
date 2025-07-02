@@ -1,14 +1,14 @@
 import "./index.css";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { auth } from "./firebase.js";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
 
 import NonAuthView from "./components/NonAuthView.jsx";
 import Dashboard from "./components/Dashboard.jsx";
-import firebase from "firebase/compat/app";
+import AddClothing from "./components/AddClothing.jsx";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -58,6 +58,7 @@ function App() {
                             )
                         }
                     />
+                    <Route path="/add" element={<AddClothing />} />
 
                     <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
                 </Routes>
