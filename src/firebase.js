@@ -1,5 +1,14 @@
 import { initializeApp } from "firebase/app";
 import {
+    getFirestore,
+    addDoc,
+    collection,
+    query,
+    where,
+    getDocs,
+    getDoc,
+} from "firebase/firestore";
+import {
     getAuth,
     createUserWithEmailAndPassword,
     GoogleAuthProvider,
@@ -18,6 +27,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 export const auth = getAuth(app);
@@ -79,4 +89,19 @@ export function logInUser(setSignedIn) {
             console.error("Logging in error: ", errorMessage);
             document.getElementById("errorDialog").show();
         });
+}
+
+export async function addItemToWardrobe(name, desc, icon) {
+    await addDoc(collection(db, "clothing"), {
+        name: name,
+        desc: desc,
+        icon: icon,
+        uid: auth.currentUser.uid,
+    });
+}
+
+export async function getWardrobe() {
+    const q = query(collection(db, "clothing"), where("uid", "==", auth.currentUser.uid));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot;
 }

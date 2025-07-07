@@ -9,6 +9,7 @@ import { onAuthStateChanged, signInAnonymously } from "firebase/auth";
 import NonAuthView from "./components/NonAuthView.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import AddClothing from "./components/AddClothing.jsx";
+import Wardrobe from "./components/Wardrobe.jsx";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -58,8 +59,14 @@ function App() {
                             )
                         }
                     />
-                    <Route path="/add" element={<AddClothing />} />
-
+                    <Route
+                        path="/add"
+                        element={user ? <AddClothing /> : <Navigate to={"/login"} />}
+                    />
+                    <Route
+                        path="/wardrobe"
+                        element={user ? <Wardrobe /> : <Navigate to={"/login"} />}
+                    />
                     <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
                 </Routes>
             </div>

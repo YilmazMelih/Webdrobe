@@ -4,7 +4,7 @@ import wardrobeLogo from "../assets/icons/wardrobe.svg";
 
 import { useNavigate } from "react-router";
 
-import { auth } from "../firebase.js";
+import { auth, getWardrobe } from "../firebase.js";
 import { signOut } from "firebase/auth";
 
 export default function Dashboard(props) {
@@ -46,7 +46,18 @@ export default function Dashboard(props) {
                         onContextMenu={(e) => e.preventDefault()}
                     />
                 </button>
-                <button className="dashboard-btn" aria-label="My Wardrobe">
+                <button
+                    className="dashboard-btn"
+                    aria-label="My Wardrobe"
+                    onClick={async () => {
+                        const querySnapshot = await getWardrobe();
+                        const clothingData = querySnapshot.docs.map((doc) => ({
+                            id: doc.id,
+                            ...doc.data(),
+                        }));
+                        navigate("/wardrobe", { state: { clothingData } });
+                    }}
+                >
                     <img
                         className="dashboard-btn-img"
                         src={wardrobeLogo}
