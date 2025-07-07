@@ -10,6 +10,7 @@ import NonAuthView from "./components/NonAuthView.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import AddClothing from "./components/AddClothing.jsx";
 import Wardrobe from "./components/Wardrobe.jsx";
+import EditClothing from "./components/EditClothing.jsx";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -62,6 +63,10 @@ function App() {
                     <Route
                         path="/add"
                         element={user ? <AddClothing /> : <Navigate to={"/login"} />}
+                    />
+                    <Route
+                        path="/edit"
+                        element={user ? <EditClothing /> : <Navigate to={"/login"} />}
                     />
                     <Route
                         path="/wardrobe"

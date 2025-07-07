@@ -2,10 +2,23 @@ import shirtLogo from "../assets/icons/shirt.svg";
 import pantsLogo from "../assets/icons/pants.svg";
 import shoesLogo from "../assets/icons/shoe.svg";
 
+import { useNavigate } from "react-router-dom";
+import { getItem } from "../firebase";
+
 export default function ClothingIcon(props) {
+    const navigate = useNavigate();
+
     return (
         <div className="clothing-icon-container">
-            <button className="clothing-icon" aria-label={props.name}>
+            <button
+                className="clothing-icon"
+                aria-label={props.name}
+                onClick={async () => {
+                    const docSnap = await getItem(props.id);
+                    const docData = { id: props.id, ...docSnap.data() };
+                    navigate("/edit", { state: { docData } });
+                }}
+            >
                 <img
                     className="clothing-icon-img"
                     src={props.icon == 0 ? shirtLogo : props.icon == 1 ? pantsLogo : shoesLogo}

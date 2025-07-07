@@ -7,6 +7,11 @@ import {
     where,
     getDocs,
     getDoc,
+    setDoc,
+    doc,
+    serverTimestamp,
+    orderBy,
+    deleteDoc,
 } from "firebase/firestore";
 import {
     getAuth,
@@ -97,11 +102,37 @@ export async function addItemToWardrobe(name, desc, icon) {
         desc: desc,
         icon: icon,
         uid: auth.currentUser.uid,
+        lastEdited: serverTimestamp(),
     });
 }
 
 export async function getWardrobe() {
-    const q = query(collection(db, "clothing"), where("uid", "==", auth.currentUser.uid));
+    const q = query(
+        collection(db, "clothing"),
+        where("uid", "==", auth.currentUser.uid),
+        orderBy("lastEdited", "desc")
+    );
     const querySnapshot = await getDocs(q);
     return querySnapshot;
+}
+
+export async function getItem(id) {
+    const docRef = doc(db, "clothing", id);
+    const docSnap = await getDoc(docRef);
+    return docSnap;
+}
+
+export async function editItem(name, desc, icon, id) {
+    const docRef = doc(db, "clothing", id);
+    await setDoc(docRef, {
+        name: name,
+        desc: desc,
+        icon: icon,
+        uid: auth.currentUser.uid,
+        lastEdited: serverTimestamp(),
+    });
+}
+
+export async function deleteItem(id) {
+    await deleteDoc(doc(db, "clothing", id));
 }
