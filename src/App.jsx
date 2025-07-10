@@ -11,6 +11,7 @@ import Dashboard from "./components/Dashboard.jsx";
 import AddClothing from "./components/AddClothing.jsx";
 import Wardrobe from "./components/Wardrobe.jsx";
 import EditClothing from "./components/EditClothing.jsx";
+import AccountSettings from "./components/AccountSettings.jsx";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -67,6 +68,16 @@ function App() {
                     <Route
                         path="/edit"
                         element={user ? <EditClothing /> : <Navigate to={"/login"} />}
+                    />
+                    <Route
+                        path="/settings"
+                        element={
+                            user ? (
+                                <AccountSettings setSignedIn={setSignedIn} />
+                            ) : (
+                                <Navigate to={"/login"} />
+                            )
+                        }
                     />
                     <Route
                         path="/wardrobe"

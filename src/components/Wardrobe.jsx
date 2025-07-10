@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from "react-router";
 import { useEffect } from "react";
 import ClothingIcon from "./ClothingIcon";
-import { confirmPasswordReset } from "firebase/auth";
 
 export default function Wardrobe() {
     const location = useLocation();
@@ -27,7 +26,12 @@ export default function Wardrobe() {
                 <div className="wardrobe">
                     {clothingData ? (
                         clothingData.length == 0 ? (
-                            <span className="background-text">No Clothes Yet...</span>
+                            <>
+                                <span className="background-text">No Clothes Yet...</span>
+                                <button className="add-btn" onClick={() => navigate("/add")}>
+                                    Add Clothing
+                                </button>
+                            </>
                         ) : (
                             clothesEls
                         )

@@ -1,6 +1,7 @@
 import shirtLogo from "../assets/icons/shirt.svg";
 import plusLogo from "../assets/icons/plus.svg";
 import wardrobeLogo from "../assets/icons/wardrobe.svg";
+import settingsLogo from "../assets/icons/settings.svg";
 
 import { useNavigate } from "react-router";
 
@@ -17,13 +18,12 @@ export default function Dashboard(props) {
                 {auth.currentUser.displayName ? auth.currentUser.displayName.split(" ")[0] : ""}
             </h1>
             <button
-                className="temp-signout-btn"
+                className="settings-btn"
                 onClick={() => {
-                    signOut(auth);
-                    props.setSignedIn(false);
+                    navigate("/settings");
                 }}
             >
-                Sign Out
+                <img src={settingsLogo} alt="settings" />
             </button>
             <div className="dashboard-container">
                 <button className="dashboard-btn" aria-label="My Outfits">

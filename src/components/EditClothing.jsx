@@ -142,7 +142,17 @@ export default function EditClothing() {
                     Edit Item
                 </button>
             </form>
-            <button onClick={() => navigate("/dashboard")} className="back-btn">
+            <button
+                onClick={async () => {
+                    const querySnapshot = await getWardrobe();
+                    const clothingData = querySnapshot.docs.map((doc) => ({
+                        id: doc.id,
+                        ...doc.data(),
+                    }));
+                    navigate("/wardrobe", { state: { clothingData } });
+                }}
+                className="back-btn"
+            >
                 Back
             </button>
             <button
