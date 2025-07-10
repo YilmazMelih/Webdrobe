@@ -191,7 +191,9 @@ textarea {
 }
 
 .add-clothing-form fieldset {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
     border: none;
     justify-content: space-between;
     color: #8d8d8d;
@@ -237,6 +239,10 @@ legend {
 
 .radio-box:hover {
     scale: 1.05;
+}
+
+.neg:hover {
+    background-color: rgb(255, 214, 214);
 }
 
 .radio-box img {
@@ -357,6 +363,7 @@ legend {
 .clothing-icon-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .clothing-icon {

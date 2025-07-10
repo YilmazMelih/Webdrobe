@@ -14,9 +14,19 @@ export default function ClothingIcon(props) {
                 className="clothing-icon"
                 aria-label={props.name}
                 onClick={async () => {
-                    const docSnap = await getItem(props.id);
-                    const docData = { id: props.id, ...docSnap.data() };
-                    navigate("/edit", { state: { docData } });
+                    if (props.adding) {
+                        const itemToAdd = { id: props.id, icon: props.icon };
+                        props.setOutfitItems((prev) =>
+                            prev.some((item) => item.id == props.id)
+                                ? [...prev]
+                                : [...prev, itemToAdd]
+                        );
+                        props.setAdding(false);
+                    } else {
+                        const docSnap = await getItem(props.id);
+                        const docData = { id: props.id, ...docSnap.data() };
+                        navigate("/edit", { state: { docData } });
+                    }
                 }}
             >
                 <img

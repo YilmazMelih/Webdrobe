@@ -26,7 +26,7 @@ export default function AddClothing() {
                     name="name"
                     type="text"
                     placeholder="Blue Sweater"
-                    maxLength="16"
+                    maxLength="20"
                     required={true}
                 />
                 <label htmlFor="desc">Description</label>
@@ -46,19 +46,35 @@ export default function AddClothing() {
                     <label className="radio-container">
                         <input type="radio" name="icon" value={0} required={true} />
                         <span className="radio-box">
-                            <img src={shirtLogo} alt="" />
+                            <img
+                                src={shirtLogo}
+                                alt=""
+                                draggable={false}
+                                onContextMenu={(e) => e.preventDefault()}
+                            />
                         </span>
                     </label>
                     <label className="radio-container">
                         <input type="radio" name="icon" value={1} />
                         <span className="radio-box">
-                            <img src={pantsLogo} alt="" />
+                            <img
+                                src={pantsLogo}
+                                alt=""
+                                draggable={false}
+                                onContextMenu={(e) => e.preventDefault()}
+                            />
                         </span>
                     </label>
                     <label className="radio-container">
                         <input type="radio" name="icon" value={2} />
                         <span className="radio-box">
-                            <img className="shoe" src={shoeLogo} alt="" />
+                            <img
+                                className="shoe"
+                                src={shoeLogo}
+                                alt=""
+                                draggable={false}
+                                onContextMenu={(e) => e.preventDefault()}
+                            />
                         </span>
                     </label>
                 </fieldset>

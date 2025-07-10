@@ -106,6 +106,15 @@ export async function addItemToWardrobe(name, desc, icon) {
     });
 }
 
+export async function addOutfit(name, items) {
+    await addDoc(collection(db, "outfits"), {
+        name: name,
+        items: items,
+        uid: auth.currentUser.uid,
+        createdAt: serverTimestamp(),
+    });
+}
+
 export async function getWardrobe() {
     const q = query(
         collection(db, "clothing"),

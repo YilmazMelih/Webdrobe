@@ -2,10 +2,11 @@ import { useLocation, useNavigate } from "react-router";
 import { useEffect } from "react";
 import ClothingIcon from "./ClothingIcon";
 
-export default function Wardrobe() {
+export default function Wardrobe(props) {
     const location = useLocation();
     const navigate = useNavigate();
-    const clothingData = location.state?.clothingData;
+    const clothingData = props.clothingData ?? location.state?.clothingData;
+    const adding = props.adding;
 
     useEffect(() => {
         if (!clothingData) {
@@ -15,13 +16,23 @@ export default function Wardrobe() {
 
     const clothesEls = clothingData
         ? clothingData.map((item) => {
-              return <ClothingIcon name={item.name} icon={item.icon} id={item.id} key={item.id} />;
+              return (
+                  <ClothingIcon
+                      adding={adding}
+                      setAdding={props.setAdding}
+                      setOutfitItems={props.setOutfitItems}
+                      name={item.name}
+                      icon={item.icon}
+                      id={item.id}
+                      key={item.id}
+                  />
+              );
           })
         : null;
 
     return (
         <main>
-            <h1>My Wardrobe</h1>
+            <h1>{adding ? "Select Item" : "My Wardrobe"}</h1>
             <div className="grid-wrapper">
                 <div className="wardrobe">
                     {clothingData ? (
@@ -39,7 +50,12 @@ export default function Wardrobe() {
                 </div>
                 <div className="fade"></div>
             </div>
-            <button onClick={() => navigate("/dashboard")} className="back-btn">
+            <button
+                onClick={() => {
+                    adding ? props.setAdding(false) : navigate("/dashboard");
+                }}
+                className="back-btn"
+            >
                 Back
             </button>
         </main>
