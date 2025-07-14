@@ -6,18 +6,24 @@ import plusLogo from "../assets/icons/plus.svg";
 import Wardrobe from "./Wardrobe";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { getWardrobe, addOutfit } from "../firebase";
+import { getWardrobe, addOutfit, getOutfits } from "../firebase";
 
 export default function CreateOutfit() {
     const navigate = useNavigate();
     const [adding, setAdding] = useState(false);
     const [clothingData, setClothingData] = useState(null);
     const [outfitItems, setOutfitItems] = useState([]);
+    const [outfitName, setOutfitName] = useState("");
 
-    function handleForm(formData) {
+    async function handleForm(formData) {
         const name = formData.get("name");
-        addOutfit(name, outfitItems);
-        navigate("/dashboard");
+        await addOutfit(name, outfitItems);
+        const querySnapshot = await getOutfits();
+        const outfitsData = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        navigate("/outfits", { state: { outfitsData } });
     }
 
     async function handleAdd() {
@@ -74,6 +80,8 @@ export default function CreateOutfit() {
                             placeholder="Coffee Date Outfit"
                             maxLength="28"
                             required={true}
+                            defaultValue={outfitName}
+                            onChange={(e) => setOutfitName(e.currentTarget.value)}
                         />
                         <fieldset>
                             <legend htmlFor="icon">Items</legend>
@@ -90,7 +98,11 @@ export default function CreateOutfit() {
                                 </span>
                             </label>
                         </fieldset>
-                        <button className="form-submit-btn" type="submit">
+                        <button
+                            className="form-submit-btn"
+                            type="submit"
+                            disabled={outfitItems.length < 2}
+                        >
                             Add to outfits
                         </button>
                     </form>

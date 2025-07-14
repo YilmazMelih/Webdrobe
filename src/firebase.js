@@ -125,6 +125,16 @@ export async function getWardrobe() {
     return querySnapshot;
 }
 
+export async function getOutfits() {
+    const q = query(
+        collection(db, "outfits"),
+        where("uid", "==", auth.currentUser.uid),
+        orderBy("createdAt", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot;
+}
+
 export async function getItem(id) {
     const docRef = doc(db, "clothing", id);
     const docSnap = await getDoc(docRef);

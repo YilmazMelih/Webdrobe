@@ -5,7 +5,7 @@ import settingsLogo from "../assets/icons/settings.svg";
 
 import { useNavigate } from "react-router";
 
-import { auth, getWardrobe } from "../firebase.js";
+import { auth, getOutfits, getWardrobe } from "../firebase.js";
 import { signOut } from "firebase/auth";
 
 export default function Dashboard(props) {
@@ -26,7 +26,18 @@ export default function Dashboard(props) {
                 <img src={settingsLogo} alt="settings" />
             </button>
             <div className="dashboard-container">
-                <button className="dashboard-btn" aria-label="My Outfits">
+                <button
+                    className="dashboard-btn"
+                    aria-label="My Outfits"
+                    onClick={async () => {
+                        const querySnapshot = await getOutfits();
+                        const outfitsData = querySnapshot.docs.map((doc) => ({
+                            id: doc.id,
+                            ...doc.data(),
+                        }));
+                        navigate("/outfits", { state: { outfitsData } });
+                    }}
+                >
                     <img
                         className="dashboard-btn-img"
                         src={shirtLogo}

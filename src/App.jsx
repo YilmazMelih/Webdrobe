@@ -13,6 +13,7 @@ import Wardrobe from "./components/Wardrobe.jsx";
 import EditClothing from "./components/EditClothing.jsx";
 import AccountSettings from "./components/AccountSettings.jsx";
 import CreateOutfit from "./components/CreateOutfit.jsx";
+import Outfits from "./components/Outfits.jsx";
 
 function App() {
     const [user, setUser] = useState(null);
@@ -87,6 +88,10 @@ function App() {
                     <Route
                         path="/create"
                         element={user ? <CreateOutfit /> : <Navigate to={"/login"} />}
+                    />
+                    <Route
+                        path="/outfits"
+                        element={user ? <Outfits /> : <Navigate to={"/login"} />}
                     />
                     <Route path="*" element={<Navigate to={user ? "/dashboard" : "/login"} />} />
                 </Routes>
