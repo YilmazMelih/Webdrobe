@@ -13,30 +13,18 @@ export default function OutfitIcon(props) {
             <button
                 className="outfit-icon"
                 aria-label={props.name}
-                // onClick={async () => {
-                //     if (props.adding) {
-                //         const itemToAdd = { id: props.id, icon: props.icon };
-                //         props.setOutfitItems((prev) =>
-                //             prev.some((item) => item.id == props.id)
-                //                 ? [...prev]
-                //                 : [...prev, itemToAdd]
-                //         );
-                //         props.setAdding(false);
-                //     } else {
-                //         const docSnap = await getItem(props.id);
-                //         const docData = { id: props.id, ...docSnap.data() };
-                //         navigate("/edit", { state: { docData } });
-                //     }
-                // }}
+                onClick={async () => {
+                    props.onClick(props.name, props.clothes, props.id);
+                }}
             >
                 <label className="radio-container">
                     <span className="radio-box">
                         <img
-                            className={props.outfits[0].icon == 2 ? "shoe" : ""}
+                            className={props.clothes[0].icon == 2 ? "shoe" : ""}
                             src={
-                                props.outfits[0].icon == 0
+                                props.clothes[0].icon == 0
                                     ? shirtLogo
-                                    : props.outfits[0].icon == 1
+                                    : props.clothes[0].icon == 1
                                     ? pantsLogo
                                     : shoesLogo
                             }
@@ -46,26 +34,26 @@ export default function OutfitIcon(props) {
                 <label className="radio-container">
                     <span className="radio-box">
                         <img
-                            className={props.outfits[1].icon == 2 ? "shoe" : ""}
+                            className={props.clothes[1].icon == 2 ? "shoe" : ""}
                             src={
-                                props.outfits[1].icon == 0
+                                props.clothes[1].icon == 0
                                     ? shirtLogo
-                                    : props.outfits[1].icon == 1
+                                    : props.clothes[1].icon == 1
                                     ? pantsLogo
                                     : shoesLogo
                             }
                         />
                     </span>
                 </label>
-                {props.outfits[2] ? (
+                {props.clothes[2] ? (
                     <label className="radio-container">
                         <span className="radio-box">
                             <img
-                                className={props.outfits[2].icon == 2 ? "shoe" : ""}
+                                className={props.clothes[2].icon == 2 ? "shoe" : ""}
                                 src={
-                                    props.outfits[2].icon == 0
+                                    props.clothes[2].icon == 0
                                         ? shirtLogo
-                                        : props.outfits[2].icon == 1
+                                        : props.clothes[2].icon == 1
                                         ? pantsLogo
                                         : shoesLogo
                                 }
@@ -73,15 +61,15 @@ export default function OutfitIcon(props) {
                         </span>
                     </label>
                 ) : null}
-                {props.outfits[3] ? (
+                {props.clothes[3] ? (
                     <label className="radio-container">
                         <span className="radio-box">
                             <img
-                                className={props.outfits[3].icon == 2 ? "shoe" : ""}
+                                className={props.clothes[3].icon == 2 ? "shoe" : ""}
                                 src={
-                                    props.outfits[3].icon == 0
+                                    props.clothes[3].icon == 0
                                         ? shirtLogo
-                                        : props.outfits[3].icon == 1
+                                        : props.clothes[3].icon == 1
                                         ? pantsLogo
                                         : shoesLogo
                                 }

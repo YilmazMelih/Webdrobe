@@ -11,6 +11,7 @@ export default function ClothingIcon(props) {
     return (
         <div className="clothing-icon-container">
             <button
+                disabled={props.disabled}
                 className="clothing-icon"
                 aria-label={props.name}
                 onClick={async () => {

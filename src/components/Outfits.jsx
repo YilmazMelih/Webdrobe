@@ -1,11 +1,18 @@
 import { useLocation, useNavigate } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import OutfitIcon from "./OutfitIcon";
+import ViewOutfit from "./ViewOutfit";
+
+import { getOutfit } from "../firebase";
 
 export default function Outfits(props) {
     const location = useLocation();
     const navigate = useNavigate();
-    const outfitData = location.state?.outfitsData;
+    const [outfitData, setOutfitData] = useState(location.state?.outfitsData);
+    const [view, setView] = useState(false);
+    const [clothingData, setClothingData] = useState([]);
+    const [outfitName, setOutfitName] = useState("");
+    const [outfitID, setOutfitID] = useState("");
 
     useEffect(() => {
         if (!outfitData) {
@@ -13,15 +20,40 @@ export default function Outfits(props) {
         }
     }, [outfitData, navigate]);
 
-    console.log(outfitData);
+    async function viewOutfit(name, clothes, id) {
+        const idArr = clothes.map((item) => item.id);
+        const clothesData = await getOutfit(idArr);
+        setClothingData(clothesData);
+        setOutfitName(name);
+        setOutfitID(id);
+
+        setView(true);
+    }
 
     const outfitEls = outfitData
         ? outfitData.map((item) => {
-              return <OutfitIcon name={item.name} outfits={item.items} key={item.id} />;
+              return (
+                  <OutfitIcon
+                      name={item.name}
+                      clothes={item.items}
+                      id={item.id}
+                      key={item.id}
+                      disabled={true}
+                      onClick={viewOutfit}
+                  />
+              );
           })
         : null;
 
-    return (
+    return view ? (
+        <ViewOutfit
+            name={outfitName}
+            clothingData={clothingData}
+            id={outfitID}
+            setView={setView}
+            setOutfitData={setOutfitData}
+        />
+    ) : (
         <main>
             <h1>My Outfits</h1>
             <div className="grid-wrapper">

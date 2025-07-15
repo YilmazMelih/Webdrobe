@@ -12,6 +12,7 @@ import {
     serverTimestamp,
     orderBy,
     deleteDoc,
+    documentId,
 } from "firebase/firestore";
 import {
     getAuth,
@@ -141,6 +142,22 @@ export async function getItem(id) {
     return docSnap;
 }
 
+export async function getOutfit(idArr) {
+    const q = query(
+        collection(db, "clothing"),
+        where("uid", "==", auth.currentUser.uid),
+        where(documentId(), "in", idArr),
+        orderBy("lastEdited", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    const results = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    }));
+
+    return results;
+}
+
 export async function editItem(name, desc, icon, id) {
     const docRef = doc(db, "clothing", id);
     await setDoc(docRef, {
@@ -154,4 +171,8 @@ export async function editItem(name, desc, icon, id) {
 
 export async function deleteItem(id) {
     await deleteDoc(doc(db, "clothing", id));
+}
+
+export async function deleteOutfit(id) {
+    await deleteDoc(doc(db, "outfits", id));
 }

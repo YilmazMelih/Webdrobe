@@ -472,6 +472,7 @@ legend {
     text-align: center;
     color: #8d8d8d;
     font-weight: 700;
+    height: 2em;
 }
 
 .create-btn {
