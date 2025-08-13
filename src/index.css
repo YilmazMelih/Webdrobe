@@ -16,7 +16,8 @@ body {
 .app-container {
     background-color: #f1f1f1;
     width: 800px;
-    height: 620px;
+    max-height: 700px;
+    min-height: 620px;
     border-radius: 20px;
     filter: drop-shadow(0px 3px 2px rgba(0, 0, 0, 0.25));
 }
@@ -129,10 +130,18 @@ h1 {
 }
 
 .dashboard-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    row-gap: 16px;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 16px;
     margin-top: 60px;
+}
+
+.dashboard-pair {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 .dashboard-btn {
@@ -494,4 +503,97 @@ legend {
 
 .create-btn:hover {
     scale: 1.05;
+}
+
+@media (max-height: 620px) {
+    body {
+        height: auto;
+    }
+}
+
+@media (max-width: 900px) {
+    .app-container {
+        scale: 0.85;
+    }
+}
+
+@media (max-width: 700px) {
+    .app-container {
+        scale: 0.75;
+    }
+}
+
+@media (max-width: 600px) {
+    .app-container {
+        scale: 1;
+        width: 95vw;
+        height: 80vh;
+    }
+
+    .header-nonauth > h1 {
+        font-size: 4rem;
+        line-height: 4rem;
+    }
+
+    .header-nonauth > h2 {
+        font-size: 1.25rem;
+        line-height: 1.25rem;
+    }
+
+    .auth-form-header {
+        font-size: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+        padding: 1.5rem;
+    }
+
+    .settings-btn {
+        top: 1.5rem;
+        right: 1.5rem;
+        scale: 0.8;
+    }
+
+    .dashboard-container {
+        height: 68vh;
+        flex-direction: column;
+        margin-top: 0;
+        gap: 6px;
+        justify-content: space-evenly;
+        align-items: center;
+    }
+
+    .dashboard-pair {
+        gap: 6px;
+    }
+
+    .dashboard-btn {
+        width: 130px;
+        height: 130px;
+        border-radius: 16px;
+    }
+
+    .dashboard-btn-img {
+        width: 100px;
+        height: 100px;
+    }
+
+    .wardrobe {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .outfits {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+    }
+
+    .clothing-icon {
+        width: 130px;
+        height: 130px;
+        border-radius: 16px;
+    }
+    .clothing-icon-img {
+        scale: 0.8;
+    }
 }
