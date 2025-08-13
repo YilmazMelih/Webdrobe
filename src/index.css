@@ -524,9 +524,14 @@ legend {
 }
 
 @media (max-width: 600px) {
+    body {
+        height: auto;
+    }
+
     .app-container {
         scale: 1;
         width: 95vw;
+        margin-top: 16px;
         height: 80vh;
     }
 
