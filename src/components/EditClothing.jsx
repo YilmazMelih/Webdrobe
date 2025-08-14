@@ -160,7 +160,7 @@ export default function EditClothing() {
                     if (!deleteConfirm) {
                         setDeleteConfirm(true);
                     } else {
-                        await deleteItem(docData.id);
+                        await deleteItem(docData.id, docData.icon);
                         const querySnapshot = await getWardrobe();
                         const clothingData = querySnapshot.docs.map((doc) => ({
                             id: doc.id,

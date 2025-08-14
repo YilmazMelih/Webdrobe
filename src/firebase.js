@@ -169,7 +169,17 @@ export async function editItem(name, desc, icon, id) {
     });
 }
 
-export async function deleteItem(id) {
+export async function deleteItem(id, icon) {
+    const q = query(
+        collection(db, "outfits"),
+        where("uid", "==", auth.currentUser.uid),
+        where("items", "array-contains-any", [{ icon: icon, id: id }])
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.docs.map(async (document) => {
+        await deleteDoc(doc(db, "outfits", document.id));
+    });
+
     await deleteDoc(doc(db, "clothing", id));
 }
 
