@@ -55,7 +55,7 @@ export default function ViewOutfit(props) {
                 }}
                 className="delete-btn"
             >
-                {deleteConfirm ? "Are you sure?" : "Delete Item"}
+                {deleteConfirm ? "Are you sure?" : "Delete Outfit"}
             </button>
         </main>
     );
