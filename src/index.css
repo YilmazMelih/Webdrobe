@@ -430,6 +430,7 @@ legend {
     position: absolute;
     cursor: pointer;
     border: none;
+    margin: 0 auto;
     top: 60%;
     border-radius: 8px;
     height: 40px;
