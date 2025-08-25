@@ -53,6 +53,7 @@ export default function CreateOutfit() {
                         className={item.icon == 2 ? "shoe" : ""}
                         src={item.icon == 0 ? shirtLogo : item.icon == 1 ? pantsLogo : shoesLogo}
                     />
+                    <span className="small-color" style={{ backgroundColor: item.color }}></span>
                 </span>
             </label>
         );

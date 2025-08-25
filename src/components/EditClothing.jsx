@@ -22,7 +22,8 @@ export default function EditClothing() {
         const name = formData.get("name");
         const desc = formData.get("desc");
         const icon = formData.get("icon");
-        await editItem(name, desc, icon, docData.id);
+        const color = formData.get("color");
+        await editItem(name, desc, icon, color, docData.id);
         const docSnap = await getItem(docData.id);
         setDocData({ id: docData.id, ...docSnap.data() });
         document.getElementById("edit-dialog").show();
@@ -138,6 +139,23 @@ export default function EditClothing() {
                         </span>
                     </label>
                 </fieldset>
+                <label>Color</label>
+                <input
+                    className="add-clothing-form-color"
+                    id="color"
+                    name="color"
+                    type="color"
+                    defaultValue={docData ? docData.color ?? "#5a5a5a" : null}
+                    onBlur={() => {
+                        const dialog = document.getElementById("edit-dialog");
+                        if (dialog.open) {
+                            dialog.close();
+                        }
+                        if (deleteConfirm) {
+                            setDeleteConfirm(false);
+                        }
+                    }}
+                ></input>
                 <button className="form-submit-btn" type="submit">
                     Edit Item
                 </button>

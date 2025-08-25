@@ -97,11 +97,12 @@ export function logInUser(setSignedIn) {
         });
 }
 
-export async function addItemToWardrobe(name, desc, icon) {
+export async function addItemToWardrobe(name, desc, icon, color) {
     await addDoc(collection(db, "clothing"), {
         name: name,
         desc: desc,
         icon: icon,
+        color: color,
         uid: auth.currentUser.uid,
         lastEdited: serverTimestamp(),
     });
@@ -158,12 +159,13 @@ export async function getOutfit(idArr) {
     return results;
 }
 
-export async function editItem(name, desc, icon, id) {
+export async function editItem(name, desc, icon, color, id) {
     const docRef = doc(db, "clothing", id);
     await setDoc(docRef, {
         name: name,
         desc: desc,
         icon: icon,
+        color: color,
         uid: auth.currentUser.uid,
         lastEdited: serverTimestamp(),
     });

@@ -12,7 +12,8 @@ export default function AddClothing() {
         const name = formData.get("name");
         const desc = formData.get("desc");
         const icon = formData.get("icon");
-        addItemToWardrobe(name, desc, icon);
+        const color = formData.get("color");
+        addItemToWardrobe(name, desc, icon, color);
     }
 
     return (
@@ -78,6 +79,14 @@ export default function AddClothing() {
                         </span>
                     </label>
                 </fieldset>
+                <label>Color</label>
+                <input
+                    className="add-clothing-form-color"
+                    id="color"
+                    name="color"
+                    type="color"
+                    defaultValue="#5a5a5a"
+                ></input>
                 <button className="form-submit-btn" type="submit">
                     Add to wardrobe
                 </button>

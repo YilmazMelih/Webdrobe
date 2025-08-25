@@ -16,7 +16,7 @@ export default function ClothingIcon(props) {
                 aria-label={props.name}
                 onClick={async () => {
                     if (props.adding) {
-                        const itemToAdd = { id: props.id, icon: props.icon };
+                        const itemToAdd = { id: props.id, icon: props.icon, color: props.color };
                         props.setOutfitItems((prev) =>
                             prev.some((item) => item.id == props.id)
                                 ? [...prev]
@@ -36,6 +36,7 @@ export default function ClothingIcon(props) {
                     draggable={false}
                     onContextMenu={(e) => e.preventDefault()}
                 />
+                <div className="clothing-icon-color" style={{ backgroundColor: props.color }}></div>
             </button>
             <span className="clothing-icon-label">{props.name}</span>
         </div>

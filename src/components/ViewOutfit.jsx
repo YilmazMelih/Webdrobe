@@ -18,6 +18,7 @@ export default function ViewOutfit(props) {
                 icon={item.icon}
                 id={item.id}
                 key={item.id}
+                color={item.color}
                 disabled={true}
             />
         );

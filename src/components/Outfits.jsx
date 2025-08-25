@@ -66,7 +66,7 @@ export default function Outfits(props) {
                             </button>
                         </div>
                     ) : (
-                        <div className="outfits">outfitEls</div>
+                        <div className="outfits">{outfitEls}</div>
                     )
                 ) : null}
                 <div className="fade"></div>

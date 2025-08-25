@@ -24,6 +24,7 @@ export default function Wardrobe(props) {
                       name={item.name}
                       icon={item.icon}
                       id={item.id}
+                      color={item.color}
                       key={item.id}
                   />
               );
@@ -43,7 +44,7 @@ export default function Wardrobe(props) {
                             </button>
                         </div>
                     ) : (
-                        <div className="wardrobe">clothesEls</div>
+                        <div className="wardrobe">{clothesEls}</div>
                     )
                 ) : null}
                 <div className="fade"></div>

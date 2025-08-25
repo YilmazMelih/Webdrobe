@@ -7,7 +7,7 @@ import { getItem } from "../firebase";
 
 export default function OutfitIcon(props) {
     const navigate = useNavigate();
-
+    console.log(props.clothes[0].color);
     return (
         <div className="outfit-icon-container">
             <button
@@ -29,6 +29,10 @@ export default function OutfitIcon(props) {
                                     : shoesLogo
                             }
                         />
+                        <span
+                            className="small-color"
+                            style={{ backgroundColor: props.clothes[0].color }}
+                        ></span>
                     </span>
                 </label>
                 <label className="radio-container">
@@ -43,6 +47,10 @@ export default function OutfitIcon(props) {
                                     : shoesLogo
                             }
                         />
+                        <span
+                            className="small-color"
+                            style={{ backgroundColor: props.clothes[1].color }}
+                        ></span>
                     </span>
                 </label>
                 {props.clothes[2] ? (
@@ -59,6 +67,10 @@ export default function OutfitIcon(props) {
                                 }
                             />
                         </span>
+                        <span
+                            className="small-color"
+                            style={{ backgroundColor: props.clothes[2].color }}
+                        ></span>
                     </label>
                 ) : null}
                 {props.clothes[3] ? (
@@ -75,6 +87,10 @@ export default function OutfitIcon(props) {
                                 }
                             />
                         </span>
+                        <span
+                            className="small-color"
+                            style={{ backgroundColor: props.clothes[3].color }}
+                        ></span>
                     </label>
                 ) : null}
             </button>
