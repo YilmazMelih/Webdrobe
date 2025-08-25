@@ -34,20 +34,18 @@ export default function Wardrobe(props) {
         <main>
             <h1>{adding ? "Select Item" : "My Wardrobe"}</h1>
             <div className="grid-wrapper">
-                <div className="wardrobe">
-                    {clothingData ? (
-                        clothingData.length == 0 ? (
-                            <>
-                                <span className="background-text">No Clothes Yet...</span>
-                                <button className="add-btn" onClick={() => navigate("/add")}>
-                                    Add Clothing
-                                </button>
-                            </>
-                        ) : (
-                            clothesEls
-                        )
-                    ) : null}
-                </div>
+                {clothingData ? (
+                    clothingData.length == 0 ? (
+                        <div className="flex-centered">
+                            <span className="background-text">No Clothes Yet...</span>
+                            <button className="add-btn" onClick={() => navigate("/add")}>
+                                Add Clothing
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="wardrobe">clothesEls</div>
+                    )
+                ) : null}
                 <div className="fade"></div>
             </div>
             <button

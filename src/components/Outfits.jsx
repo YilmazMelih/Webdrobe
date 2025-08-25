@@ -57,20 +57,18 @@ export default function Outfits(props) {
         <main>
             <h1>My Outfits</h1>
             <div className="grid-wrapper">
-                <div className="outfits">
-                    {outfitData ? (
-                        outfitData.length == 0 ? (
-                            <>
-                                <span className="background-text">No Outfits Yet...</span>
-                                <button className="add-btn" onClick={() => navigate("/create")}>
-                                    Create Outfit
-                                </button>
-                            </>
-                        ) : (
-                            outfitEls
-                        )
-                    ) : null}
-                </div>
+                {outfitData ? (
+                    outfitData.length == 0 ? (
+                        <div className="flex-centered">
+                            <span className="background-text">No Outfits Yet...</span>
+                            <button className="add-btn" onClick={() => navigate("/create")}>
+                                Create Outfit
+                            </button>
+                        </div>
+                    ) : (
+                        <div className="outfits">outfitEls</div>
+                    )
+                ) : null}
                 <div className="fade"></div>
             </div>
             <button
@@ -81,7 +79,7 @@ export default function Outfits(props) {
             >
                 Back
             </button>
-            {outfitData.length != 0 ? (
+            {outfitData && outfitData.length != 0 ? (
                 <button className="create-btn" onClick={() => navigate("/create")}>
                     Create Outfit
                 </button>

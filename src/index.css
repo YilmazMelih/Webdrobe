@@ -339,7 +339,6 @@ legend {
 
 .background-text {
     display: block;
-    position: absolute;
     text-align: center;
     margin: 0 auto;
     top: 45%;
@@ -427,10 +426,10 @@ legend {
 }
 
 .add-btn {
-    position: absolute;
     cursor: pointer;
+    display: block;
     border: none;
-    margin: 0 auto;
+    margin: 20px auto;
     top: 60%;
     border-radius: 8px;
     height: 40px;
@@ -504,6 +503,14 @@ legend {
 
 .create-btn:hover {
     scale: 1.05;
+}
+
+.flex-centered {
+    width: 400px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: space-between;
+    margin: 150px auto;
 }
 
 @media (max-height: 620px) {
